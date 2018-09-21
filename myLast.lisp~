@@ -1,4 +1,0 @@
-(defun myLast (L)
-  "Returns the last item in a list"
-  (if (endp L) nil
-      (last (rest L))))
