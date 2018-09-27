@@ -1,9 +1,5 @@
-(defun  my-replace (elt1 elt2 L)
-  "Returns list L with all occurences of e1 replaced."
-  (labels ((my-replace-aux (elt1 elt2 L)
-              (cond ((endp L) nil)
-                    ((equal (first L) elt1) (cons elt2 (rest L)))
-                    ((listp (first L)) (my-replace-aux elt1 elt2 (first L)))
-                    (t (my-replace-aux elt1 elt2 (rest L))))))
-    
-  (my-replace-aux elt1 elt2 L)))
+(defun my-replace (e1 e2 L)
+  "Replaces all occurences of element e1 with e2 at all levels of the list structure"
+  (cond ((endp L) nil)
+	((eql e1 (first L)) (cons e2 (my-replace e1 e2 (rest L))))
+	(t (cons (first L) (my-replace e1 e2 (rest L))))))
