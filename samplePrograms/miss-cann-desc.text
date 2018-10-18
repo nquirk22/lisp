@@ -1,0 +1,102 @@
+DESCRIPTION:
+
+You are to implement a solution to the following "river
+crossing"problem.  There are three missionaries and three cannibals on
+one side of a river; suppose that they are on the left hand side.
+They wants to get across to the other side.  There is a small boat
+that is able to carry only two people at the one time.  Only a
+missionary can pilot the boat.  If it ever happens that there are more
+cannibals than missionaries on one side of the river, then the
+missionaries will be eaten unless the boat is docked at that side of
+the river. (Cannibals do not try to eat anyone who is able to escape.)
+
+Determine how everyone may get safely (ie, uneaten) across the river
+to the right hand side.
+
+Below,  	m  represents a missionary
+		c  represents a cannibal
+		r  represents the river
+		b  represents the boat      
+
+
+IMPLEMENTATION REQUIREMENT: 
+
+You must follow the design method of data abstraction, the standard
+programming idea of abstracting and hiding implementation matters.  In
+other words, all access to, and creation of, states must be done via
+functions, so that the access and creation are properly abstracted
+from the particular representation employed.  For example, to access
+the things on the left side of the river you need a function like
+(using now the first representation of a state given below):
+
+		(defun left-side (state)
+		   (first state) )
+
+This is clearly much better than simply using (FIRST STATE), which
+will fail if the representation of a state is changed.
+
+OUTPUT:
+
+The output is to be a series of states representing the states reached
+as a result of the moves carried out.  The first state should be the
+starting state, in which all six people are on the left side of the
+river, and the last state should be the ending state, in which all six
+people are on the right side of the river.  For example, assuming the
+first representation of the states given below, the output might look
+something like:
+
+		((b m m m c c c)())   
+		((m m c c)(b m c))    
+		((b m m m c c)(c))    
+		  etc.
+		  etc.
+		(()(b m m m c c c))    
+
+WHAT TO DO:
+
+(1) Implement a solution to the problem using the following
+representation of a state:
+
+       ((<things-on-left-bank>) (<things-on-right-bank>))
+
+
+Things on a side of the river should include the boat, since the
+location of the boat needs to be known.
+
+Example:     ((b m m c c) (m c))
+
+This implementation must include the following functions to correctly abstract
+from this particular representation:
+
+left-side-river     ;; gives list of things on left side of the river   
+right-side-river    ;; gives list of things on right side of the river
+make-state          ;; creates a state from things on left	
+                    ;;   side and things on right side of the river
+
+   (Others, no doubt will be needed too.)
+
+(2) Change the representation of a state to:
+
+       (<things-on-left-bank> r <things-on-right-bank>)
+
+(Example:  (b m m c c r m c)
+
+By amending ONLY the functions (above) which create and access states,
+re-run the program.  If the program has been written correctly with
+respect to the data abstraction, then it should still run.
+
+
+SUGGESTIONS:
+
+The top-level function should be something like CROSS-RIVER which can
+be given the initial state of the three missionaries, the three
+cannibals, and the boat all being on the same side of the river.
+Remember that in Lisp, each function can be tested independently of
+the whole program.  You should test each function.  Eg., after writing
+the LEFT-SIDE function, it might be tested thus:
+
+		> (left-side '((b x y) (c d)))
+		(b x y)
+                > (left-side '(() (b a s d f)))
+                nil
+
